@@ -13,8 +13,7 @@ class Handles(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        # await self.update_roles_daily.start()
-        pass
+        await self.update_roles_daily.start()
 
     @commands.Cog.listener()
     async def on_message(self, message):
