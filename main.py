@@ -1,7 +1,7 @@
+import os
+
 import discord
 from discord.ext import commands
-
-from notebooks.config_parser import config
 
 intents = discord.Intents.default()
 intents.members = True
@@ -23,6 +23,4 @@ if __name__ == "__main__":
             exc = '{}: {}'.format(type(e).__name__, e)
             print('Failed to load extension {}\n{}'.format(extension, exc))
 
-    # client.run(os.getenv('TOKEN'))
-    params = config("discord")
-    client.run(params["token"])
+    client.run(os.environ['DISCORD_TOKEN'])

@@ -1,12 +1,12 @@
+import os
 import psycopg2
-from notebooks.config_parser import config
 
 
 def connect():
     try:
-        params = config("postgres")
         print('Connecting to the PostgreSQL database...')
-        conn = psycopg2.connect(**params)
+        conn = psycopg2.connect(os.environ["DATABASE_URL"])
+        print("Connected")
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     return conn
