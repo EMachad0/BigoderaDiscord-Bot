@@ -13,7 +13,8 @@ class Handles(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        await self.update_roles_daily.start()
+        # await self.update_roles_daily.start()
+        pass
 
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -24,7 +25,9 @@ class Handles(commands.Cog):
             try:
                 await insert_db(message.author, handle)
                 await self.give_role(message.author, handle)
+                await message.add_reaction('✅')
             except Exception as e:
+                await message.add_reaction('❌')
                 print(f'Exception {e}: {e.args}')
 
     async def give_role(self, member, handle):
