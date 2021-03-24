@@ -35,7 +35,6 @@ def get_codeforces_user_maxRank(handles):
 def get_codeforces_problem(handle, rating, tags):
     correct_tags = ''
     for tag in all_tags & tags:
-        print(tag)
         correct_tags += tag.replace(" ", "%20") + ';'
     problems = []
     solved = []
