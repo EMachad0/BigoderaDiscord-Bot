@@ -18,7 +18,7 @@ class Probleminha(commands.Cog):
                 await message.channel.send("rating?")
                 return
             rating = content[1]
-            tags = {t.replace('_', '%20') for t in content[2:]}
+            tags = {t.replace('_', ' ') for t in content[2:]}
             handle = HandleDB.select(message.author.name + '#' + message.author.discriminator)
             try:
                 problem = cf_api.get_codeforces_problem(handle, rating, tags)
