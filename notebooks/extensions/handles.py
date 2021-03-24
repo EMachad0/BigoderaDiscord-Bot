@@ -1,3 +1,4 @@
+import os
 import discord
 from notebooks import cf_api
 from notebooks.DAO import HandleDB
@@ -6,7 +7,6 @@ from discord.ext import commands, tasks
 
 class Handles(commands.Cog):
     roles = ["Unrated", "Newbie", "Pupil", "Specialist", "Expert", "Candidate Master", "Grandmaster"]
-    brute_guild_id = 599810003347701792
 
     def __init__(self, client):
         self.client = client
@@ -22,15 +22,15 @@ class Handles(commands.Cog):
         if message.content.startswith('$register'):
             handle = message.content.split()[1]
             try:
-                await insert_db(message.author, handle)
-                await self.give_role(message.author, handle)
+                rank = cf_api.get_codeforces_user_maxRank([handle])[handle]["maxRank"]
+                HandleDB.insert(message.author.name + "#" + message.author.discriminator, handle)
+                await self.give_role(message.author, rank)
                 await message.add_reaction('✅')
             except Exception as e:
                 await message.add_reaction('❌')
                 print(f'Exception {e}: {e.args}')
 
-    async def give_role(self, member, handle):
-        rank = cf_api.get_codeforces_user_maxRank([handle])[handle]["maxRank"]
+    async def give_role(self, member, rank):
         rank = rank.capitalize()
         to_remove = [discord.utils.get(member.guild.roles, name=r) for r in self.roles]
         await member.remove_roles(*to_remove)
@@ -39,18 +39,14 @@ class Handles(commands.Cog):
     @tasks.loop(hours=24)
     async def update_roles_daily(self):
         users = HandleDB.select_all()
-        guild = self.client.get_guild(self.brute_guild_id)
+        ranks = cf_api.get_codeforces_user_maxRank([v[1] for v in users])
+        guild = self.client.get_guild(int(os.environ["GUILD_ID"]))
         for (name, handle) in users:
             member = guild.get_member_named(name)
-            print(member, handle)
-            await self.give_role(member, handle)
-
-
-async def insert_db(member, handle):
-    var = cf_api.get_codeforces_user_maxRank([handle])[handle]["maxRank"]
-    HandleDB.insert(member.name + "#" + member.discriminator, handle)
+            if member is not None:
+                rank = ranks[handle]["maxRank"]
+                await self.give_role(member, rank)
 
 
 def setup(bot):
     bot.add_cog(Handles(bot))
-
