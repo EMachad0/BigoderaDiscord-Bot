@@ -7,7 +7,7 @@ intents = discord.Intents.default()
 intents.members = True
 client = commands.Bot(command_prefix='?', description="BIGODERA", intents=intents)
 
-startup_extensions = ["handles"]
+startup_extensions = ["handles", "probleminha"]
 
 
 @client.event

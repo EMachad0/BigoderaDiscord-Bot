@@ -38,7 +38,7 @@ class Handles(commands.Cog):
 
     @tasks.loop(hours=24)
     async def update_roles_daily(self):
-        users = HandleDB.select()
+        users = HandleDB.select_all()
         guild = self.client.get_guild(self.brute_guild_id)
         for (name, handle) in users:
             member = guild.get_member_named(name)
