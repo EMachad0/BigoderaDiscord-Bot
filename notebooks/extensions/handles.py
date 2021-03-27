@@ -36,7 +36,7 @@ class Handles(commands.Cog):
         await member.remove_roles(*to_remove)
         await member.add_roles(discord.utils.get(member.guild.roles, name=rank))
 
-    @tasks.loop(hours=24)
+    @tasks.loop(hours=1)
     async def update_roles_daily(self):
         users = HandleDB.select_all()
         ranks = cf_api.get_codeforces_user_maxRank([v[1] for v in users])
@@ -46,6 +46,8 @@ class Handles(commands.Cog):
             if member is not None:
                 rank = ranks[handle]["maxRank"]
                 await self.give_role(member, rank)
+            else:
+                print(f"{name} not found")
 
 
 def setup(bot):
