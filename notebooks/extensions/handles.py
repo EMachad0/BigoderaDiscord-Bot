@@ -38,6 +38,7 @@ class Handles(commands.Cog):
 
     @tasks.loop(hours=1)
     async def update_roles_daily(self):
+        print("Executing update_roles_daily...")
         users = HandleDB.select_all()
         ranks = cf_api.get_codeforces_user_maxRank([v[1] for v in users])
         guild = self.client.get_guild(int(os.environ["GUILD_ID"]))
@@ -48,6 +49,7 @@ class Handles(commands.Cog):
                 await self.give_role(member, rank)
             else:
                 print(f"{name} not found")
+        print("Done")
 
 
 def setup(bot):
