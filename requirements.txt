@@ -2,3 +2,5 @@ pip
 setuptools
 discord
 psycopg2-binary
+requests
+bs4
