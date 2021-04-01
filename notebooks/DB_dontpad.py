@@ -13,13 +13,22 @@ class DB_dontpad:
         print("DB do dontpad carregado")
 
     def load_data(self):
-        data = self.pull(self.db_path)
-        self.contador_caga_pau = int(data[0])
-        self.memes = data[1:]
+        try:
+            data = self.pull(self.db_path)
+            self.contador_caga_pau = int(data[0])
+            self.memes = data[1:]
+        except Exception as e:
+            self.memes = ['caiu o dontpad']
+            self.contador_caga_pau = 999999
+            print(e)
+
 
     def save_data(self):
-        data = str(self.contador_caga_pau) + '\n' + '\n'.join(self.memes)
-        self.push(self.db_path, data)
+        try:
+            data = str(self.contador_caga_pau) + '\n' + '\n'.join(self.memes)
+            self.push(self.db_path, data)
+        except Exception as e:
+            print(e)
 
     def pull(self, path):
         data = get(url=path)
@@ -30,9 +39,12 @@ class DB_dontpad:
         return old_text
 
     def push(self, path, text):
-        data = {'text': text}
+        try:
+            data = {'text': text}
 
-        return post(url=path, data=data)
+            return post(url=path, data=data)
+        except Exception as e:
+            print(e)
 
 
 db = DB_dontpad()

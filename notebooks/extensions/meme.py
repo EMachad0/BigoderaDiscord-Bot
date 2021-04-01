@@ -16,6 +16,7 @@ class Meme(commands.Cog):
             return
         try:
             text = message.content
+            print(text)
             res = ''
             if text.startswith('$meme'):
                 res = meme()
