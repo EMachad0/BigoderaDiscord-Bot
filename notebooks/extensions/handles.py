@@ -36,7 +36,7 @@ class Handles(commands.Cog):
         await member.remove_roles(*to_remove)
         await member.add_roles(discord.utils.get(member.guild.roles, name=rank))
 
-    @tasks.loop(hours=1)
+    @tasks.loop(hours=24)
     async def update_roles_daily(self):
         print("Executing update_roles_daily...")
         users = HandleDB.select_all()
