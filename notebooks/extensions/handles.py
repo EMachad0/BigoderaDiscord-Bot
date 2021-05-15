@@ -45,7 +45,10 @@ class Handles(commands.Cog):
         for (name, handle) in users:
             member = guild.get_member_named(name)
             if member is not None:
-                rank = ranks[handle]["maxRank"]
+                try:
+                    rank = ranks[handle]["maxRank"]
+                except KeyError:
+                    continue
                 await self.give_role(member, rank)
             else:
                 print(f"{name} not found")
