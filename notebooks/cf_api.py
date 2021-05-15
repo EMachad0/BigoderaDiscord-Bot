@@ -28,7 +28,7 @@ def get_codeforces_user_maxRank(handles):
         try:
             users[user['handle']] = {'maxRank': user['maxRank']}
         except KeyError as e:
-            users[user['handle']] = {'maxRank': "unrated"}
+            pass
     return users
 
 
