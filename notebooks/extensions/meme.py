@@ -103,7 +103,7 @@ def noncommand(message):
         ret = r.choice(carinhas)
     elif "bom dia" in text and text[-1] == "!":
         ret = "O sol nasceu na puta que pariu do horizonte, para iluminar a porra dos seus sonhos, bom dia filha da putaaa"
-    elif "tchau" in text:
+    elif "tchau" in text or "vou sair" in text:
         ret = "Já vai tarde..."
     elif "melhor da vida" in text:
         quotes = [
