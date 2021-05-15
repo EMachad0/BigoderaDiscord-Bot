@@ -6,7 +6,7 @@ from discord.ext import commands, tasks
 
 
 class Handles(commands.Cog):
-    roles = ["Unrated", "Newbie", "Pupil", "Specialist", "Expert", "Candidate Master", "Grandmaster"]
+    roles = ["Newbie", "Pupil", "Specialist", "Expert", "Candidate Master", "Grandmaster"]
 
     def __init__(self, client):
         self.client = client
